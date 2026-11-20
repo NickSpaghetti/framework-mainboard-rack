@@ -25,6 +25,9 @@ measurements of a physical board.
   a print-ready sled
 - `design-docs/framework-cad/risc-v/README.md` — DeepComputing DC-ROMA RISC-V board
   reference documents and fit notes
+- `print-files/risc-v-fit-test-h2c-petg-basic/` — orientation-prepared STLs and
+  H2C/PETG Basic settings for a one-bay mechanical fit trial; these are not a
+  validated RISC-V sled
 - `SCREWS.txt` — hardware list and fastener notes
 - `images/` — photos of the assembled rack
 - `framework.jpg` — top-view photo of the mainboard, used to locate the cooler fin stack
