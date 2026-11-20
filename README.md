@@ -1,21 +1,30 @@
-# Framework 13 Mainboard — 3-Bay 1U Rack
+# Framework Mainboard Rack — 3-Bay 1U
 
-A 19" EIA-310 1U rack that holds three Framework Laptop 13 mainboards. All parts print
-without supports on a Bambu Lab H2D (325 × 320 × 325 mm). Dimensions come from
-Framework's published CAD and from measurements of a physical board.
+The current print-ready design is a 19" EIA-310 1U rack for three Framework Laptop 13
+mainboards. Framework 12 and DC-ROMA RISC-V sleds are under development and are **not
+print-ready or supported yet**. All current parts print without supports on a Bambu Lab
+H2D (325 × 320 × 325 mm). Dimensions come from Framework's published CAD and from
+measurements of a physical board.
 
 ![Three Framework 13 mainboards installed in the rack](images/rack-with-boards.jpg)
 
 ## Contents
 
-- `stl/` — print-ready STLs, exported 2026-07-06
-- `scripts/rebuild_all.py` — parametric source for all parts. It rebuilds the model in a
-  fresh Fusion 360 document; set `EXPORT_STL = True` to export. Where the spec and the
+- `stl/` — legacy Framework 13-only print-ready STLs, exported 2026-07-06
+- `scripts/rebuild_all.py` — legacy Framework 13-only Fusion 360 generator. It rebuilds
+  the model in a fresh document; set `EXPORT_STL = True` to export. Where the spec and
   script disagree, the script is authoritative.
-- `design-docs/SPEC-RevB.md` — design spec with all dimensions, stack-ups, and rationale.
+- `design-docs/SPEC-RevB.md` — legacy Framework 13-only design spec with dimensions,
+  stack-ups, and rationale.
   The errata blocks at the top supersede the body and record the design's revision history.
 - `design-docs/framework-cad/` — Framework's reference CAD (tray STL, board drawing
   PDF/DXF, case STEP) and the scripts used to measure it
+- `design-docs/framework-cad/framework12/` — attributed Framework 12 outline DXF
+  and converted board/cooler reference STL
+- `design-docs/framework-cad/sled-fit-study.scad` — OpenSCAD envelope preview; not
+  a print-ready sled
+- `design-docs/framework-cad/risc-v/README.md` — DeepComputing DC-ROMA RISC-V board
+  reference documents and fit notes
 - `SCREWS.txt` — hardware list and fastener notes
 - `images/` — photos of the assembled rack
 - `framework.jpg` — top-view photo of the mainboard, used to locate the cooler fin stack
@@ -24,11 +33,27 @@ Framework's published CAD and from measurements of a physical board.
 
 | Part | Qty | Print orientation | Supports |
 |---|---|---|---|
-| BayModule — rack tray | 3 | standing on front face (Z = 248) | none; 8–10 mm brim |
-| CarrierTray — board sled | 3 | flat, plate on bed (Z = 34.5) | none |
-| SideHolderLeft — exhaust duct + rack ear | 1 | standing on front face | none |
-| SideHolderRight — intake plenum + rack ear | 1 | standing on front face | none |
-| RetainerPeg — board hold-down | 9 + spares | head down on bed | none |
+| BayModule — rack tray (legacy FW13) | 3 | standing on front face (Z = 248) | none; 8–10 mm brim |
+| CarrierTray — board sled (FW13 only) | 3 | flat, plate on bed (Z = 34.5) | none |
+| SideHolderLeft — exhaust duct + rack ear (FW13 airflow) | 1 | standing on front face | none |
+| SideHolderRight — intake plenum + rack ear (FW13 airflow) | 1 | standing on front face | none |
+| RetainerPeg — board hold-down (FW13 hole pattern) | 9 + spares | head down on bed | none |
+
+## File naming and board compatibility
+
+The existing flat files in `stl/` keep their original names for people using the
+Framework 13 rack. **Do not assume `CarrierTray.stl` fits Framework 12 or the
+RISC-V board.** New board-specific sleds will use explicit compatibility paths:
+
+```text
+stl/sleds/framework-12-13th-gen/CarrierTray.stl
+stl/sleds/framework-13-dc-roma-fml13v01/CarrierTray.stl
+```
+
+Only parts verified against both boards will move into a `stl/shared/` or
+`stl/chassis/` directory. Airflow parts remain board-specific until mixed-bay
+thermal tests pass. `design-docs/framework-cad/sled-fit-study.scad` and the
+`*_reference.stl` meshes are study inputs, not print parts.
 
 Print in PETG or PETG-CF with 4 walls and 30–40% infill. A standard PETG profile at
 0.4 mm layers works; the spec assumed 0.2 mm but the parts don't need it.
